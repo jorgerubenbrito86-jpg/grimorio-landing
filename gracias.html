@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu grimorio está listo — Grimorio Lunar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#efe6cf;
+    --parchment-dark:#e3d8b8;
+    --ink-text:#241b12;
+    --ink-muted:#6f6450;
+    --gold:#a9791a;
+    --wax:#7a1f2b;
+    --wax-light:#9c3344;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--parchment);
+    color:var(--ink-text);
+    font-family:'Work Sans',sans-serif;
+    min-height:100vh;
+    padding:3.5rem 1.5rem 4rem;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:480px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--wax);
+    display:inline-block;
+    margin-bottom:1.1rem;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(2rem, 6vw, 2.8rem);
+    line-height:1.15;
+    margin-bottom:0.9rem;
+  }
+  .wrap > p{
+    color:var(--ink-muted);
+    font-size:1.02rem;
+    max-width:360px;
+    margin:0 auto;
+  }
+
+  /* ---------- SELLO DE CERA (botón firma) ---------- */
+  .seal-link{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:172px;
+    height:172px;
+    margin:3rem auto 1.4rem;
+    border-radius:50%;
+    text-decoration:none;
+    background:radial-gradient(circle at 35% 30%, var(--wax-light), var(--wax) 72%);
+    box-shadow:0 18px 38px -14px rgba(122,31,43,0.55), inset 0 0 0 6px rgba(0,0,0,0.1);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .seal-link:hover, .seal-link:focus-visible{
+    transform:scale(1.06) rotate(-2deg);
+    box-shadow:0 26px 48px -10px rgba(122,31,43,0.65), inset 0 0 0 6px rgba(0,0,0,0.1);
+  }
+  .seal-link svg{ width:54px; height:54px; opacity:0.92; }
+  .seal-label{
+    position:absolute;
+    bottom:-2.1rem;
+    left:50%;
+    transform:translateX(-50%);
+    white-space:nowrap;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+  }
+  .label-default{ opacity:1; transition:opacity .25s ease; }
+  .label-hover{ opacity:0; transition:opacity .25s ease; position:absolute; inset:0; }
+  .seal-link:hover .label-default, .seal-link:focus-visible .label-default{ opacity:0; }
+  .seal-link:hover .label-hover, .seal-link:focus-visible .label-hover{ opacity:1; }
+
+  .fallback{
+    margin-top:3.6rem;
+    font-size:0.85rem;
+    color:var(--ink-muted);
+    word-break:break-all;
+  }
+  .fallback a{ color:var(--wax); text-decoration:underline; }
+
+  /* ---------- DIVISOR ENTRE SECCIONES ---------- */
+  .divider{
+    max-width:480px;
+    margin:3.8rem auto 3.2rem;
+    display:flex;
+    align-items:center;
+    gap:0.8rem;
+    color:var(--gold);
+  }
+  .divider::before,
+  .divider::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .divider span{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.9rem;
+  }
+
+  /* ---------- INVITACIÓN AL TALLER ---------- */
+  .invite{
+    max-width:480px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .invite h2{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(1.5rem, 5vw, 2rem);
+    line-height:1.2;
+    margin-bottom:0.7rem;
+  }
+  .invite > p.lead{
+    color:var(--ink-muted);
+    max-width:380px;
+    margin:0 auto 1.8rem;
+  }
+  .flyer-frame{
+    position:relative;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 24px 50px -20px rgba(36,27,18,0.45);
+    margin-bottom:1.8rem;
+  }
+  .flyer-frame img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .invite-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.6rem;
+    background:var(--wax);
+    color:var(--parchment);
+    text-decoration:none;
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    padding:1rem 2.1rem;
+    border-radius:999px;
+    box-shadow:0 16px 30px -12px rgba(122,31,43,0.5);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .invite-btn:hover, .invite-btn:focus-visible{
+    transform:translateY(-2px) scale(1.02);
+    box-shadow:0 20px 36px -10px rgba(122,31,43,0.6);
+  }
+  .invite-note{
+    margin-top:1rem;
+    font-size:0.78rem;
+    color:var(--ink-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <span class="eyebrow">El sello está roto</span>
+  <h1>Tu grimorio<br>está listo</h1>
+  <p>Pulsa el sello para abrir tu ejemplar. Es tuyo, para siempre.</p>
+
+  <!-- ============================================================ -->
+  <!-- SUSTITUYE "EBOOK_URL_AQUI" POR EL ENLACE REAL DE TU LIBRO      -->
+  <!-- (Google Drive, Dropbox, etc. — que sea de acceso público)      -->
+  <!-- ============================================================ -->
+  <a class="seal-link" href="https://drive.google.com/EBOOK_URL_AQUI" target="_blank" rel="noopener">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 14C33 14 27.5 19.6 27.5 27.2c0 6.1 3.6 11.3 8.7 13.4-1.1 1.6-2.7 2.8-4.6 3.5 2.4.9 5.1.6 7.3-.9 2.6 1.9 5.8 2.6 8.9 1.9-1.7-1.3-2.9-3.1-3.5-5.1 4.5-2.4 7.6-7.2 7.6-12.8C52.5 19.6 47 14 40 14z" stroke="#efe6cf" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="18" cy="46" r="2.4" fill="#efe6cf"/>
+    </svg>
+    <span class="seal-label">
+      <span class="label-default">Romper el sello</span>
+      <span class="label-hover">Abrir grimorio →</span>
+    </span>
+  </a>
+
+  <p class="fallback">Si el botón no se abre, copia este enlace:<br><a href="https://drive.google.com/EBOOK_URL_AQUI">https://drive.google.com/EBOOK_URL_AQUI</a></p>
+</div>
+
+<div class="divider"><span>✦</span></div>
+
+<div class="invite">
+  <span class="eyebrow">Una invitación más</span>
+  <h2>Si quieres ir más allá del libro</h2>
+  <p class="lead">Te invitamos a "El mapa oculto de tu vida", un taller experiencial presencial en Valencia.</p>
+
+  <div class="flyer-frame">
+    <img src="flyer-evento.jpg" alt="Taller experiencial El mapa oculto de tu vida, viernes 26 de junio, Espacio Mice, Valencia">
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SUSTITUYE "RESERVA_URL_AQUI" POR EL ENLACE AL QUE QUIERES      -->
+  <!-- LLEVARLOS (formulario de reserva, WhatsApp, otra landing...)   -->
+  <!-- Ejemplo WhatsApp: https://wa.me/34641746399?text=Quiero%20mi%20lugar%20en%20el%20taller%20del%2026%20de%20junio -->
+  <!-- ============================================================ -->
+  <a class="invite-btn" href="RESERVA_URL_AQUI" target="_blank" rel="noopener">Quiero mi lugar →</a>
+  <p class="invite-note">Cupos limitados · Viernes 26 de junio · Espacio Mice, Valencia</p>
+</div>
+
+</body>
+</html>
